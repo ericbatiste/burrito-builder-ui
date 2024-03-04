@@ -80,7 +80,7 @@ function OrderForm({addOrder}) {
       <p className="user-feedback-text">Order: {ingredients.join(", ") || "Nothing selected"}</p>
 
       <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
-      {error && <p>{error}</p> }
+      {error && <p className="error-text">{error}</p> }
     </form>
   );
 }

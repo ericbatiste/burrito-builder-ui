@@ -58,4 +58,17 @@ describe('User flows', () => {
     cy.get('.order').last().find('.ingredient-list').first().contains('li', 'beans');
     cy.get('.order').last().find('.ingredient-list').last().contains('li', 'jalapenos');
   })
+
+  it('Should dissallow form submission if form not properly filled out', () => {
+    cy.get('input[name="name"]').type('Eric');
+    cy.get('form').find('button').contains('Submit Order').click();
+    cy.get('.error-text').contains('p', 'Please fill out form!');
+    cy.get('.orders-container').children().should('have.length', 3);
+    
+    cy.get('form').find('button').contains('beans');
+    cy.get('form').find('button').contains('steak');
+    cy.get('form').find('button').contains('Submit Order').click();
+    cy.get('.error-text').contains('p', 'Please fill out form!');
+    cy.get('.orders-container').children().should('have.length', 3);
+  })
 })
