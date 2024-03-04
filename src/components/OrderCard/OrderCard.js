@@ -5,8 +5,8 @@ export default function OrderCard ({name, ingredients}) {
       <div className="order">
         <h3>{name}</h3>
         <ul className="ingredient-list">
-          {ingredients.map((ingredient) => {
-            return <li>{ingredient}</li>;
+          {ingredients.map((ingredient, index) => {
+            return <li key={index}>{ingredient}</li>;
           })}
         </ul>
       </div>

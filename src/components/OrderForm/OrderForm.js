@@ -19,7 +19,6 @@ function OrderForm({addOrder}) {
       })
       .then(res => res.json())
       .then(postResult => {
-          console.log(postResult);
           addOrder(postResult)
         })
         .catch(err => console.error(err))

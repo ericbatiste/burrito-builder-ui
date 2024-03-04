@@ -13,14 +13,19 @@ describe('User flows', () => {
     cy.get('form').children().should('have.length', 15)
     cy.get('input[name="name"]').should('have.attr', 'placeholder',  'Name')
     cy.get('button').first().contains('beans');
+    cy.get('form').find('button').contains('lettuce')
+    cy.get('form').find('button').contains('pico de gallo')
+    cy.get('form').find('button').contains('sour cream')
     cy.get('.user-feedback-text').contains('p', 'Order: Nothing selected')
     cy.get('button').last().contains('Submit Order');
     
     cy.get('.orders-container').children().should('have.length', 3)
+    
     cy.get('.order').first().contains('h3', 'Pat');
     cy.get('.order').first().find('.ingredient-list').children().should('have.length', 5);
     cy.get('.order').first().find('.ingredient-list').first().contains('li', 'beans');
     cy.get('.order').first().find('.ingredient-list').last().contains('li', 'jalapeno');
+    
     cy.get('.order').last().contains('h3', 'Alex');
     cy.get('.order').last().find('.ingredient-list').children().should('have.length', 5);
     cy.get('.order').last().find('.ingredient-list').first().contains('li', 'sofritas');
