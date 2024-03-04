@@ -8,7 +8,7 @@ function App() {
   const [orders, setOrders] = useState([])
 
   function addOrder(order) {
-    setOrders([...orders, setOrders(order)])
+    setOrders([...orders, order])
   }
 
   useEffect(() => {
@@ -25,8 +25,7 @@ function App() {
         <h1>Burrito Builder</h1>
         <OrderForm addOrder={addOrder}/>
       </header>
-
-      <Orders orders={orders} />
+      {orders.length && <Orders orders={orders} />}
     </main>
   );
 }

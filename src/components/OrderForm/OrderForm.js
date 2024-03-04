@@ -19,6 +19,7 @@ function OrderForm({addOrder}) {
       })
       .then(res => res.json())
       .then(postResult => {
+          console.log(postResult);
           addOrder(postResult)
         })
         .catch(err => console.error(err))
@@ -77,7 +78,7 @@ function OrderForm({addOrder}) {
 
       {ingredientButtons}
 
-      <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
+      <p className="user-feedback-text">Order: {ingredients.join(", ") || "Nothing selected"}</p>
 
       <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
       {error && <p>{error}</p> }
