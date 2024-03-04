@@ -1,12 +1,36 @@
 import { useState } from "react";
 
-function OrderForm(props) {
+function OrderForm({addOrder}) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState([]);
+  const [error, setError] = useState("")
 
   function handleSubmit(e) {
     e.preventDefault();
-    clearInputs();
+    if (name && ingredients.length) {
+      fetch('http://localhost:3001/api/v1/orders', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: Date.now(),
+          name: name,
+          ingredients: ingredients
+        }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(res => res.json())
+      .then(postResult => {
+          addOrder(postResult)
+        })
+        .catch(err => console.error(err))
+    } else {
+      setError("Please fill out form!")
+    }
+    clearInputs()
+  }
+
+  function addIngredients(e) {
+    e.preventDefault();
+    setIngredients([...ingredients, e.target.name])
   }
 
   function clearInputs() {
@@ -28,12 +52,13 @@ function OrderForm(props) {
     "cilantro",
     "sour cream",
   ];
+
   const ingredientButtons = possibleIngredients.map((ingredient) => {
     return (
       <button
         key={ingredient}
         name={ingredient}
-        // onClick={(e) => }
+        onClick={(e) => addIngredients(e)}
       >
         {ingredient}
       </button>
@@ -47,7 +72,7 @@ function OrderForm(props) {
         placeholder="Name"
         name="name"
         value={name}
-        // onChange={(e) => }
+        onChange={(e) => setName(e.target.value)}
       />
 
       {ingredientButtons}
@@ -55,6 +80,7 @@ function OrderForm(props) {
       <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
 
       <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
+      {error && <p>{error}</p> }
     </form>
   );
 }
